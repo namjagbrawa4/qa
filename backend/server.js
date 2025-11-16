@@ -10,6 +10,7 @@ import userRoutes from './routes/users.js';
 import questionRoutes from './routes/questions.js';
 import examRoutes from './routes/exams.js';
 import statsRoutes from './routes/stats.js';
+import unlimitedRoutes from './routes/unlimited.js';
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -27,7 +28,7 @@ app.use(cors({
     'https://work-2-cnhschjrqyafowac.prod-runtime.all-hands.dev'
   ],
   credentials: true,
-  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
@@ -43,6 +44,7 @@ app.use('/api/users', userRoutes);
 app.use('/api/questions', questionRoutes);
 app.use('/api/exams', examRoutes);
 app.use('/api/stats', statsRoutes);
+app.use('/api/unlimited', unlimitedRoutes);
 
 // 健康检查
 app.get('/api/health', (req, res) => {

@@ -115,18 +115,30 @@ const handleLogin = async () => {
   isLoading.value = true
   error.value = ''
 
-  const result = await authStore.login({
-    username: form.username,
-    password: form.password
-  })
+  try {
+    const result = await authStore.login({
+      username: form.username,
+      password: form.password
+    })
 
-  isLoading.value = false
-
-  if (result.success) {
-    // 登录成功，跳转到首页
-    router.push('/')
-  } else {
-    error.value = result.error
+    if (result.success) {
+      // 登录成功，跳转到首页
+      router.push('/')
+    } else {
+      error.value = result.error || '登录失败，请检查用户名和密码'
+      // 确保错误消息显示足够长时间
+      setTimeout(() => {
+        if (error.value === result.error) {
+          // 只有当错误消息没有被其他操作覆盖时才清除
+          // error.value = ''
+        }
+      }, 5000)
+    }
+  } catch (err) {
+    console.error('Login error:', err)
+    error.value = '网络错误，请稍后重试'
+  } finally {
+    isLoading.value = false
   }
 }
 </script>

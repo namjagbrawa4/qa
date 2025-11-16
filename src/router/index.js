@@ -5,6 +5,7 @@ import QuestionBank from '../views/QuestionBank.vue'
 import ExamManagement from '../views/ExamManagement.vue'
 import ExamResults from '../views/ExamResults.vue'
 import TakeExam from '../views/TakeExam.vue'
+import UnlimitedMode from '../views/UnlimitedMode.vue'
 import Login from '../views/Login.vue'
 import Register from '../views/Register.vue'
 import UserManagement from '../views/UserManagement.vue'
@@ -44,6 +45,12 @@ const routes = [
     path: '/exam/:id',
     name: 'TakeExam',
     component: TakeExam,
+    meta: { requiresAuth: true }
+  },
+  {
+    path: '/unlimited',
+    name: 'UnlimitedMode',
+    component: UnlimitedMode,
     meta: { requiresAuth: true }
   },
   {

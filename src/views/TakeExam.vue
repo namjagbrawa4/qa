@@ -235,6 +235,7 @@
 import { ref, reactive, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import { useExamStore } from '../stores/exam.js'
+import { examAPI } from '../services/api.js'
 
 const route = useRoute()
 const router = useRouter()
@@ -313,7 +314,7 @@ const stopTimer = () => {
 const loadExam = async () => {
   try {
     const examId = route.params.id
-    const response = await examStore.examAPI.getExam(examId)
+    const response = await examAPI.getExam(examId)
     exam.value = response.data.exam
     
     if (response.data.hasUserTaken) {

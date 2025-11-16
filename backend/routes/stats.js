@@ -111,9 +111,9 @@ router.get('/exam-performance', authenticateToken, requireAdmin, async (req, res
     const totalQuestions = completedRecords.reduce((sum, r) => sum + r.total_questions, 0);
     const totalTime = completedRecords.reduce((sum, r) => sum + (r.duration_seconds || 0), 0);
     
-    const avgScore = Math.round(totalScore / completedRecords.length);
-    const avgAccuracy = Math.round((totalCorrect / totalQuestions) * 100);
-    const avgTime = Math.round(totalTime / completedRecords.length);
+    const avgScore = completedRecords.length > 0 ? Math.round(totalScore / completedRecords.length) : 0;
+    const avgAccuracy = totalQuestions > 0 ? Math.round((totalCorrect / totalQuestions) * 100) : 0;
+    const avgTime = completedRecords.length > 0 ? Math.round(totalTime / completedRecords.length) : 0;
     
     // 分数分布
     const scoreRanges = [

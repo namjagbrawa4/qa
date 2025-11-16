@@ -144,13 +144,18 @@ export const useExamStore = defineStore('exam', () => {
 
   const toggleExamActive = async (examId) => {
     try {
+      console.log('Store: toggleExamActive called with examId:', examId)
       const response = await examAPI.toggleExamActive(examId)
+      console.log('Store: API response:', response.data)
       const index = exams.value.findIndex(e => e.id === examId)
+      console.log('Store: Found exam at index:', index)
       if (index > -1) {
         exams.value[index] = response.data.exam
+        console.log('Store: Updated exam in store:', exams.value[index])
       }
       return { success: true, exam: response.data.exam }
     } catch (error) {
+      console.error('Store: toggleExamActive error:', error)
       return { success: false, error: error.response?.data?.error || '切换试卷状态失败' }
     }
   }

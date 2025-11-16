@@ -160,20 +160,25 @@ const handleRegister = async () => {
   isLoading.value = true
   error.value = ''
 
-  const result = await authStore.register({
-    username: form.username,
-    email: form.email,
-    password: form.password,
-    role: 'user' // 默认注册为普通用户
-  })
+  try {
+    const result = await authStore.register({
+      username: form.username,
+      email: form.email,
+      password: form.password,
+      role: 'user' // 默认注册为普通用户
+    })
 
-  isLoading.value = false
-
-  if (result.success) {
-    // 注册成功，跳转到首页
-    router.push('/')
-  } else {
-    error.value = result.error
+    if (result.success) {
+      // 注册成功，跳转到首页
+      router.push('/')
+    } else {
+      error.value = result.error || '注册失败，请稍后重试'
+    }
+  } catch (err) {
+    console.error('Register error:', err)
+    error.value = '网络错误，请稍后重试'
+  } finally {
+    isLoading.value = false
   }
 }
 </script>

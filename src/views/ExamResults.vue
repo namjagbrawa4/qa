@@ -38,15 +38,15 @@
             <div class="text-sm text-gray-500">参与人数</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-green-600">{{ examData.avgScore }}</div>
+            <div class="text-2xl font-bold text-green-600">{{ isNaN(examData.avgScore) ? 0 : examData.avgScore }}</div>
             <div class="text-sm text-gray-500">平均分数</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-purple-600">{{ examData.avgAccuracy }}%</div>
+            <div class="text-2xl font-bold text-purple-600">{{ isNaN(examData.avgAccuracy) ? 0 : examData.avgAccuracy }}%</div>
             <div class="text-sm text-gray-500">平均正确率</div>
           </div>
           <div class="text-center">
-            <div class="text-2xl font-bold text-orange-600">{{ Math.round(examData.avgTime / 60) }}分钟</div>
+            <div class="text-2xl font-bold text-orange-600">{{ isNaN(examData.avgTime) ? 0 : Math.round(examData.avgTime / 60) }}分钟</div>
             <div class="text-sm text-gray-500">平均用时</div>
           </div>
         </div>
