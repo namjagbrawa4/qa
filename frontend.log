@@ -1,13 +1,10 @@
 
 > quiz-exam-system@1.0.0 dev
-> vite
+> vite --host 0.0.0.0 --port 12009
 
-Port 12000 is in use, trying another one...
-Port 12001 is in use, trying another one...
-Port 12002 is in use, trying another one...
 
-  VITE v4.5.14  ready in 272 ms
+  VITE v4.5.14  ready in 251 ms
 
-  ➜  Local:   http://localhost:12003/
-  ➜  Network: http://10.2.15.143:12003/
+  ➜  Local:   http://localhost:12009/
+  ➜  Network: http://10.2.15.143:12009/
   ➜  press h to show help
