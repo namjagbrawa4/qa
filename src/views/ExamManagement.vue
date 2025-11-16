@@ -360,9 +360,18 @@ const editExam = (exam) => {
 const toggleExamActive = async (exam) => {
   const action = exam.is_active ? '停用' : '激活'
   if (confirm(`确定要${action}试卷"${exam.title}"吗？`)) {
-    const result = await examStore.toggleExamActive(exam.id)
-    if (!result.success) {
-      alert(result.error || `${action}失败`)
+    try {
+      console.log('Toggling exam:', exam.id, 'from', exam.is_active, 'to', !exam.is_active)
+      const result = await examStore.toggleExamActive(exam.id)
+      console.log('Toggle result:', result)
+      if (!result.success) {
+        alert(result.error || `${action}失败`)
+      } else {
+        console.log('Toggle successful')
+      }
+    } catch (error) {
+      console.error('Toggle exam error:', error)
+      alert(`${action}失败: ${error.message}`)
     }
   }
 }

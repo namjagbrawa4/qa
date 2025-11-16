@@ -100,6 +100,38 @@ const initDatabase = () => {
       )
     `);
 
+    // 无限制答题会话表
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS unlimited_sessions (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        user_id INTEGER NOT NULL,
+        initial_score INTEGER NOT NULL, -- 初始总分
+        current_score INTEGER NOT NULL, -- 当前剩余分数
+        questions_per_round INTEGER DEFAULT 5, -- 每轮题目数量
+        total_questions_answered INTEGER DEFAULT 0, -- 总答题数
+        total_correct INTEGER DEFAULT 0, -- 总正确数
+        is_active BOOLEAN DEFAULT 1, -- 会话是否活跃
+        started_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        ended_at DATETIME,
+        FOREIGN KEY (user_id) REFERENCES users (id)
+      )
+    `);
+
+    // 无限制答题记录表
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS unlimited_question_records (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        session_id INTEGER NOT NULL,
+        question_id INTEGER NOT NULL,
+        user_answer TEXT, -- JSON格式存储用户答案
+        is_correct BOOLEAN NOT NULL,
+        score_change INTEGER NOT NULL, -- 分数变化（负数表示扣分）
+        answered_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (session_id) REFERENCES unlimited_sessions (id) ON DELETE CASCADE,
+        FOREIGN KEY (question_id) REFERENCES questions (id)
+      )
+    `);
+
     // 创建默认管理员账户
     const stmt = db.prepare(`
       INSERT OR IGNORE INTO users (username, email, password, role) 

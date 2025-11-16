@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // 创建axios实例
 const api = axios.create({
-  baseURL: 'http://localhost:3001/api',
+  baseURL: '/api',
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json'
@@ -199,6 +199,33 @@ export const statsAPI = {
   
   // 获取题目分析
   getQuestionAnalysis: (params = {}) => api.get('/stats/question-analysis', { params })
+};
+
+// 无限制答题API
+export const unlimitedAPI = {
+  // 创建无限制答题会话
+  createSession: (sessionData) => api.post('/unlimited/sessions', sessionData),
+  
+  // 获取当前活跃会话
+  getActiveSession: () => api.get('/unlimited/sessions/active'),
+  
+  // 获取下一轮题目
+  getQuestions: (sessionId, count = 5) => api.get(`/unlimited/sessions/${sessionId}/questions`, { params: { count } }),
+  
+  // 提交答案
+  submitAnswer: (sessionId, answerData) => api.post(`/unlimited/sessions/${sessionId}/submit`, answerData),
+  
+  // 结束会话
+  endSession: (sessionId) => api.post(`/unlimited/sessions/${sessionId}/end`),
+  
+  // 获取会话统计
+  getSessionStats: (sessionId) => api.get(`/unlimited/sessions/${sessionId}/stats`),
+  
+  // 获取用户历史会话
+  getSessions: (params = {}) => api.get('/unlimited/sessions', { params }),
+  
+  // 获取用户无限制答题统计
+  getUserStats: () => api.get('/unlimited/stats')
 };
 
 // 健康检查
